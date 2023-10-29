@@ -19,8 +19,7 @@ OperarTabela::OperarTabela(QTableWidget *parent, QString *vetor) : tabela(0),
 }
 
 OperarTabela::~OperarTabela()
-{
-}
+{}
 
 void OperarTabela::start()
 {
@@ -31,7 +30,7 @@ void OperarTabela::start()
     QStringList cabecalho = {"Matricula", "Nome"};
     tabela->setHorizontalHeaderLabels(cabecalho);
     tabela->setColumnWidth(0, 100); // Matricula
-    tabela->setColumnWidth(1, 675); // Nome
+    tabela->setColumnWidth(1, 650); // Nome
     tabela->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tabela->verticalHeader()->setVisible(false);
 }
@@ -46,7 +45,7 @@ void OperarTabela::limpar()
     start();
 }
 
-void OperarTabela::popular()
+void OperarTabela::atualizar()
 {
     if (!tabela)
         throw QString("tabela nao localizada");
@@ -57,13 +56,15 @@ void OperarTabela::popular()
 
     limpar();
 
-    for (int i = 0; i < 1000; ++i)
+    int j = 0;
+    for (int i = 0; i < 1000; ++i){
         if (vetor[i] != ""){
-            tabela->insertRow(i);
-            tabela->setItem(i, 0, new QTableWidgetItem(QString::number(i)));
-            tabela->setItem(i, 1, new QTableWidgetItem(vetor[i]));
+            tabela->insertRow(j);
+            tabela->setItem(j, 0, new QTableWidgetItem(QString::number(i)));
+            tabela->setItem(j, 1, new QTableWidgetItem(vetor[i]));
+            ++j;
         }
-    
+    }
 }
 
 void OperarTabela::buscaElemento(const int& matricula)

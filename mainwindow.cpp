@@ -6,16 +6,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ot = new OperarTabela(ui->tableWidget_saida_dados, vetor);
-    ot->start();
-    
-    ot->popular();
+    operar_tabela = new OperarTabela(ui->tableWidget_saida_dados, vetor);
+    operar_tabela->start();
+    arquivo = new Arquivo(vetor);
+    arquivo->abrir();
+    operar_tabela->atualizar();
 }
 
 MainWindow::~MainWindow()
 {
-    if (ot)
-        delete ot;
+    if (operar_tabela)
+        delete operar_tabela;
+    if (arquivo)
+        delete arquivo;
     delete ui;
 }
 

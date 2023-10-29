@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include "operartabela.h"
+#include "arquivo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,7 +20,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    OperarTabela *ot;
+    OperarTabela *operar_tabela;
     QString vetor[1000];
+    Arquivo *arquivo;
 };
 #endif // MAINWINDOW_H

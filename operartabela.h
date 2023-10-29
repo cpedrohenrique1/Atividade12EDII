@@ -16,7 +16,7 @@ public:
     ~OperarTabela();
     void start();
     void limpar();
-    void popular();
+    void atualizar();
     void buscaElemento(const int& matricula);
 };
 
