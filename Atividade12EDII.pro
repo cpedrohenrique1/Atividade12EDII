@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    operartabela.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    operartabela.h
 
 FORMS += \
     mainwindow.ui
