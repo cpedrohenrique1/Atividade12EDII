@@ -56,7 +56,6 @@ void MainWindow::on_pushButton_inserir_clicked()
             throw QString("matricula nao pode estar vazia");
         }
         operar_tabela->inserirElemento(matricula, nomeCompleto);
-        operar_tabela->atualizar();
     }
     catch(QString &e)
     {

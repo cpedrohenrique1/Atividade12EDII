@@ -97,7 +97,7 @@ void OperarTabela::buscaElemento(const QString &nomeCompleto)
             tabela->insertRow(0);
             tabela->setItem(0, 0, new QTableWidgetItem(QString::number(i)));
             tabela->setItem(0, 1, new QTableWidgetItem(vetor[i]));
-            break;
+            return;
         }
     }
 }
@@ -113,6 +113,7 @@ void OperarTabela::inserirElemento(int& matricula, QString& nomeCompleto)
     if (nomeCompleto.isEmpty())
         throw QString("Nome nao pode estar vazio, se deseja remover use o botao 'remover'");
     vetor[matricula] = nomeCompleto;
+    atualizar();
 }
 
 void OperarTabela::alterarElemento(int &matricula, QString &nomeCompleto)
@@ -121,7 +122,14 @@ void OperarTabela::alterarElemento(int &matricula, QString &nomeCompleto)
         throw QString("vetor nao localizado");
     if (matricula < 0 || matricula >= 1000)
         throw QString("numero de matricula nao condiz com os padroes");
+    if (nomeCompleto.isEmpty())
+        throw QString("Nome nao pode estar vazio, se deseja remover use o botao remover");
+    
+    if (vetor[matricula].isEmpty())
+        throw QString("Elemento nao existe, se deseja adicionar use o botao 'inserir'");
+    
     vetor[matricula] = nomeCompleto;
+    atualizar();
 }
 
 void OperarTabela::removerElemento(int &matricula)
@@ -130,5 +138,8 @@ void OperarTabela::removerElemento(int &matricula)
         throw QString("vetor nao localizado");
     if (matricula < 0 || matricula >= 1000)
         throw QString("numero de matricula nao condiz com os padroes");
+    if (vetor[matricula] == "")
+        throw QString("elemento ja foi removido");
     vetor[matricula] = "";
+    atualizar();
 }
