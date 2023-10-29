@@ -1,56 +1,82 @@
 #include "operartabela.h"
 
-void OperarTabela::start(QTableWidget *parent)
+OperarTabela::OperarTabela() : tabela(0),
+                               vetor(0)
 {
-    if (!parent){
-        throw QString("Tabela nao criada");
-    }
-    parent->setColumnCount(5);
-    QStringList cabecalho = {"Matricula", "Nome", "Departamento", "Titulacao", "Tipo de contrato"};
-    parent->setHorizontalHeaderLabels(cabecalho);
-    parent->setColumnWidth(0, 100); // Matricula
-    parent->setColumnWidth(1, 250); // Nome
-    parent->setColumnWidth(2, 100); // Departamento
-    parent->setColumnWidth(3, 150); // Titulacao
-    parent->setColumnWidth(4, 130); // Tipo de contrato
-    parent->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
-void OperarTabela::limpar(QTableWidget *parent)
+OperarTabela::OperarTabela(QTableWidget *parent, QString *vetor) : tabela(0),
+                                                                   vetor(0)
 {
-    if (!parent){
-        throw QString("Tabela nao criada");
-    }
-    parent->setRowCount(0);
-    parent->clearContents();
-   start(parent);
+    if (!parent)
+        throw QString("tabela nao criada");
+    
+    if (!vetor)
+        throw QString("vetor nao criado");
+    
+    this->tabela = parent;
+    this->vetor = vetor;
 }
 
-void OperarTabela::popular(QTableWidget *parent, int& tamanho_vetor, /* classe ou vetor para pegar os dados aqui  */)
+OperarTabela::~OperarTabela()
 {
-    if (!parent){
-        throw QString("Tabela nao criada");
-    }
-    if (!array_professor || tamanho_vetor == 0)
-    {
-        throw QString("Erro, Vetor de professores nao existe");
-    }
-   limpar(parent);
-    for (int i = 0; i < tamanho_vetor; ++i)
-    {
-        parent->insertRow(i);
-        parent->setItem(i, 0, new QTableWidgetItem(QString::number(array_professor[i].getMatricula())));
-        parent->setItem(i, 1, new QTableWidgetItem(array_professor[i].getNome()));
-    }
 }
 
-void OperarTabela::buscaElemento(QTableWidget *parent, /* classe ou vetor para pegar os dados aqui  */){
-    if (!parent){
-        throw QString("Tabela nao criada");
-    }
-    limpar(parent);
+void OperarTabela::start()
+{
+    if (!tabela)
+        throw QString("tabela nao localizada");
+    
+    tabela->setColumnCount(2);
+    QStringList cabecalho = {"Matricula", "Nome"};
+    tabela->setHorizontalHeaderLabels(cabecalho);
+    tabela->setColumnWidth(0, 100); // Matricula
+    tabela->setColumnWidth(1, 675); // Nome
+    tabela->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tabela->verticalHeader()->setVisible(false);
+}
 
-    parent->insertRow(0);
-    parent->setItem(0, 0, new QTableWidgetItem(QString::number(professor.getMatricula())));
-    parent->setItem(0, 1, new QTableWidgetItem(professor.getNome()));
+void OperarTabela::limpar()
+{
+    if (!tabela)
+        throw QString("tabela nao localizada");
+
+    tabela->setRowCount(0);
+    tabela->clearContents();
+    start();
+}
+
+void OperarTabela::popular()
+{
+    if (!tabela)
+        throw QString("tabela nao localizada");
+    
+    if (!vetor)
+        throw QString("vetor nao localizado");
+    
+
+    limpar();
+
+    for (int i = 0; i < 1000; ++i)
+        if (vetor[i] != ""){
+            tabela->insertRow(i);
+            tabela->setItem(i, 0, new QTableWidgetItem(QString::number(i)));
+            tabela->setItem(i, 1, new QTableWidgetItem(vetor[i]));
+        }
+    
+}
+
+void OperarTabela::buscaElemento(const int& matricula)
+{
+    if (!tabela)
+        throw QString("tabela nao localizada");
+    
+    if (!vetor)
+        throw QString("vetor nao localizado");
+    
+    limpar();
+
+    tabela->insertRow(0);
+    tabela->setItem(0, 0, new QTableWidgetItem(QString::number(matricula)));
+    tabela->setItem(0, 1, new QTableWidgetItem(vetor[matricula]));
 }

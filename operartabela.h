@@ -2,13 +2,22 @@
 #define OPERARTABELA_H
 
 #include "QTableWidget"
+#include "QHeaderView"
 
-class OperarTabela{
+class OperarTabela
+{
+private:
+    QTableWidget *tabela;
+    QString *vetor;
+
 public:
-    void start(QTableWidget *parent);
-    void limpar(QTableWidget *parent);
-    void popular(QTableWidget *parent, int &tamanho_vetor, Professor *prof);
-    void buscaElemento(QTableWidget *parent, Professor &prof);
+    OperarTabela();
+    OperarTabela(QTableWidget *parent, QString *vetor);
+    ~OperarTabela();
+    void start();
+    void limpar();
+    void popular();
+    void buscaElemento(const int& matricula);
 };
 
 #endif // OPERARTABELA_H
