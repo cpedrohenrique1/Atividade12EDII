@@ -31,7 +31,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     OperarTabela *operar_tabela;
-    QString vetor[1000];
     Arquivo *arquivo;
 };
 #endif // MAINWINDOW_H

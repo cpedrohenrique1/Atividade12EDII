@@ -1,20 +1,44 @@
 #include "operartabela.h"
 
 OperarTabela::OperarTabela() : tabela(0),
-                               vetor(0)
+                               vetor(0),
+                               tamanho_vetor(0)
 {}
 
-OperarTabela::OperarTabela(QTableWidget *parent, QString *vetor) : tabela(0),
-                                                                   vetor(0)
+OperarTabela::OperarTabela(QTableWidget *parent, int tamanho_vetor):   tabela(0),
+                                                                        vetor(0),
+                                                                        tamanho_vetor(0)
 {
     if (!parent)
         throw QString("tabela nao criada");
     
-    if (!vetor)
-        throw QString("vetor nao criado");
-    
     this->tabela = parent;
-    this->vetor = vetor;
+    if (tamanho_vetor <= 0){
+        throw QString("Tamanho invalido, valor precisa ser maior que 0");
+    }
+
+    this->tamanho_vetor = tamanho_vetor;
+    try
+    {
+        vetor = new QString[tamanho_vetor];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        throw QString("Nao foi possivel alocar memoria");
+    }
+}
+
+QString *OperarTabela::getVetor() const{
+    return vetor;
+}
+
+int OperarTabela::getTamanhoVetor()const{
+    return tamanho_vetor;
+}
+
+OperarTabela::~OperarTabela(){
+    if (vetor)
+        delete[] vetor;
 }
 
 void OperarTabela::start()
@@ -51,20 +75,16 @@ void OperarTabela::atualizar()
     
     limpar();
 
-    int j = 0;
-    for (int i = 0; i < 1000; ++i){
-        if (vetor[i] != ""){
-            tabela->insertRow(j);
-            tabela->setItem(j, 0, new QTableWidgetItem(QString::number(i)));
-            tabela->setItem(j, 1, new QTableWidgetItem(vetor[i]));
-            ++j;
-        }
+    for (int i = 0; i < tamanho_vetor; ++i){
+        tabela->insertRow(i);
+        tabela->setItem(i, 0, new QTableWidgetItem(QString::number(i)));
+        tabela->setItem(i, 1, new QTableWidgetItem(vetor[i]));
     }
 }
 
 void OperarTabela::buscaElemento(const int& matricula)
 {
-    if (matricula >= 1000 || matricula < 0)
+    if (matricula >= tamanho_vetor || matricula < 0)
         throw QString("Numero invalido, tem que ser entre 0 e 999");
     if (!tabela)
         throw QString("tabela nao localizada {buscaelemento}");
@@ -87,7 +107,7 @@ void OperarTabela::buscaElemento(const QString &nomeCompleto)
 
     limpar();
 
-    for (int i = 0; i < 1000; ++i){
+    for (int i = 0; i < tamanho_vetor; ++i){
         if (vetor[i] == nomeCompleto.toUpper()){
             tabela->insertRow(0);
             tabela->setItem(0, 0, new QTableWidgetItem(QString::number(i)));
@@ -99,7 +119,7 @@ void OperarTabela::buscaElemento(const QString &nomeCompleto)
 
 void OperarTabela::inserirElemento(int& matricula, QString& nomeCompleto)
 {
-    if (matricula < 0 || matricula >= 1000)
+    if (matricula < 0 || matricula >= tamanho_vetor)
         throw QString("numero de matricula nao condiz com os padroes {inserirElemento}");
     
     if (nomeCompleto.isEmpty())
@@ -117,7 +137,7 @@ void OperarTabela::inserirElemento(int& matricula, QString& nomeCompleto)
 
 void OperarTabela::alterarElemento(int &matricula, QString &nomeCompleto)
 {
-    if (matricula < 0 || matricula >= 1000)
+    if (matricula < 0 || matricula >= tamanho_vetor)
         throw QString("numero de matricula nao condiz com os padroes {alterarElemento}");
 
     if (nomeCompleto.isEmpty())
@@ -137,7 +157,7 @@ void OperarTabela::removerElemento(int &matricula)
 {
     if (!vetor)
         throw QString("vetor nao localizado {removerElemento}");
-    if (matricula < 0 || matricula >= 1000)
+    if (matricula < 0 || matricula >= tamanho_vetor)
         throw QString("numero de matricula nao condiz com os padroes {removerElemento}");
     if (vetor[matricula] == "")
         throw QString("elemento ja foi removido {removerElemento}");

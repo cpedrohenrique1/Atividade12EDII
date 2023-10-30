@@ -59,6 +59,7 @@
   "files.associations": {
     "qtablewidget": "cpp",
     "new": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "qheaderview": "cpp"
   }
 }

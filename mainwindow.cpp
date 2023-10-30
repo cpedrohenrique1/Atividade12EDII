@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     try{
-        operar_tabela = new OperarTabela(ui->tableWidget_saida_dados, vetor);
+        operar_tabela = new OperarTabela(ui->tableWidget_saida_dados, 1000);
         operar_tabela->start();
-        arquivo = new Arquivo(vetor);
+        arquivo = new Arquivo(operar_tabela->getVetor(), operar_tabela->getTamanhoVetor());
         arquivo->abrir();
         operar_tabela->atualizar();
     }catch (std::bad_alloc& e){
