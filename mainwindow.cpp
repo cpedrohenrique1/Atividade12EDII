@@ -6,11 +6,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    operar_tabela = new OperarTabela(ui->tableWidget_saida_dados, vetor);
-    operar_tabela->start();
-    arquivo = new Arquivo(vetor);
-    arquivo->abrir();
-    operar_tabela->atualizar();
+    try{
+        operar_tabela = new OperarTabela(ui->tableWidget_saida_dados, vetor);
+        operar_tabela->start();
+        arquivo = new Arquivo(vetor);
+        arquivo->abrir();
+        operar_tabela->atualizar();
+    }catch (std::bad_alloc& e){
+        QMessageBox::critical(this, "Erro", "Nao foi possivel alocar memoria para a criacao da tabela");
+    }
 }
 
 MainWindow::~MainWindow()
@@ -30,16 +34,14 @@ void MainWindow::on_pushButton_consultar_clicked()
         bool ok;
         QString nomeCompleto = ui->lineEdit_nomeCompleto->text();
         int matricula = ui->lineEdit_matricula->text().toInt(&ok);
-        if (ok){
+        if (ok)
             operar_tabela->buscaElemento(matricula);
-        }else if (!nomeCompleto.isEmpty()){
+        else if (!nomeCompleto.isEmpty())
             operar_tabela->buscaElemento(nomeCompleto);
-        }else{
+        else
             operar_tabela->atualizar();
-        }
     }
-    catch(QString &e)
-    {
+    catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
 }
@@ -52,16 +54,14 @@ void MainWindow::on_pushButton_inserir_clicked()
         bool ok;
         int matricula = ui->lineEdit_matricula->text().toInt(&ok);
         QString nomeCompleto = ui->lineEdit_nomeCompleto->text();
-        if (!ok){
+        if (!ok)
             throw QString("matricula nao pode estar vazia");
-        }
+        
         operar_tabela->inserirElemento(matricula, nomeCompleto);
     }
-    catch(QString &e)
-    {
+    catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
-    
 }
 
 
@@ -76,8 +76,7 @@ void MainWindow::on_pushButton_alterar_clicked()
             throw QString("n° matricula nao pode estar vazio");
         operar_tabela->alterarElemento(matricula, nomeCompleto);
     }
-    catch(QString &e)
-    {
+    catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
 }
@@ -93,9 +92,9 @@ void MainWindow::on_pushButton_remover_clicked()
             throw QString("n° matricula nao pode estar vazio");
         operar_tabela->removerElemento(matricula);
     }
-    catch(QString &e)
-    {
+    catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
+    
 }
 

@@ -13,7 +13,6 @@ private:
 public:
     OperarTabela();
     OperarTabela(QTableWidget *parent, QString *vetor);
-    ~OperarTabela();
     void start();
     void limpar();
     void atualizar();
