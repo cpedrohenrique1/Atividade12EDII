@@ -4,6 +4,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , operar_tabela(0)
+    , arquivo(0)
 {
     ui->setupUi(this);
     try{
