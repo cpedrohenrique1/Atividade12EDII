@@ -129,12 +129,21 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_matricula</tabstop>
+  <tabstop>lineEdit_nomeCompleto</tabstop>
+  <tabstop>pushButton_consultar</tabstop>
+  <tabstop>pushButton_inserir</tabstop>
+  <tabstop>pushButton_alterar</tabstop>
+  <tabstop>pushButton_remover</tabstop>
+  <tabstop>tableWidget_saida_dados</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
