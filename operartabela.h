@@ -18,8 +18,8 @@ public:
     void start();
     void limpar();
     void atualizar();
-    void buscaElemento(const int& matricula);
-    void buscaElemento(const QString& nomeCompleto);
+    QString buscaElemento(const int& matricula);
+    QString buscaElemento(const QString& nomeCompleto);
     void inserirElemento(int& matricula, QString& nomeCompleto);
     void alterarElemento(int& matricula, QString& nomeCompleto);
     void removerElemento(int& matricula);

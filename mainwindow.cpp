@@ -37,9 +37,9 @@ void MainWindow::on_pushButton_consultar_clicked()
         QString nomeCompleto = ui->lineEdit_nomeCompleto->text();
         int matricula = ui->lineEdit_matricula->text().toInt(&ok);
         if (ok)
-            operar_tabela->buscaElemento(matricula);
+            QMessageBox::about(this, "Concluido", "Matricula: " + QString::number(matricula) + "\nNome Completo: " + operar_tabela->buscaElemento(matricula));
         else if (!nomeCompleto.isEmpty())
-            operar_tabela->buscaElemento(nomeCompleto);
+            QMessageBox::about(this, "Concluido", operar_tabela->buscaElemento(nomeCompleto));
         else
             operar_tabela->atualizar();
     }
@@ -60,6 +60,7 @@ void MainWindow::on_pushButton_inserir_clicked()
             throw QString("matricula nao pode estar vazia");
         
         operar_tabela->inserirElemento(matricula, nomeCompleto);
+        QMessageBox::about(this, "Concluido", "Elemento de matricula: " + QString::number(matricula) + "\nNome Completo:" + operar_tabela->buscaElemento(matricula) +" inserido");
     }
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
@@ -77,6 +78,7 @@ void MainWindow::on_pushButton_alterar_clicked()
         if (!ok)
             throw QString("n° matricula nao pode estar vazio");
         operar_tabela->alterarElemento(matricula, nomeCompleto);
+        QMessageBox::about(this, "Concluido", "Elemento de matricula: " + QString::number(matricula) + " alterado");
     }
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
@@ -93,6 +95,7 @@ void MainWindow::on_pushButton_remover_clicked()
         if (!ok)
             throw QString("n° matricula nao pode estar vazio");
         operar_tabela->removerElemento(matricula);
+        QMessageBox::about(this, "Concluido", "Elemento de matricula: " + QString::number(matricula) + " removido");
     }
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);

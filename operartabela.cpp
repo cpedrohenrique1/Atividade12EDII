@@ -82,39 +82,29 @@ void OperarTabela::atualizar()
     }
 }
 
-void OperarTabela::buscaElemento(const int& matricula)
+QString OperarTabela::buscaElemento(const int& matricula)
 {
     if (matricula >= tamanho_vetor || matricula < 0)
         throw QString("Numero invalido, tem que ser entre 0 e 999");
-    if (!tabela)
-        throw QString("tabela nao localizada {buscaelemento}");
+        
     if (!vetor)
         throw QString("vetor nao localizado {buscaelemento}");
-    
-    limpar();
-
-    tabela->insertRow(0);
-    tabela->setItem(0, 0, new QTableWidgetItem(QString::number(matricula)));
-    tabela->setItem(0, 1, new QTableWidgetItem(vetor[matricula]));
+    if (vetor[matricula] == "")
+        return "Nao encontrado";
+    return vetor[matricula];
 }
 
-void OperarTabela::buscaElemento(const QString &nomeCompleto)
+QString OperarTabela::buscaElemento(const QString &nomeCompleto)
 {
-    if (!tabela)
-        throw QString("tabela nao localizada");
     if (!vetor)
         throw QString("vetor nao localizado");
 
-    limpar();
-
     for (int i = 0; i < tamanho_vetor; ++i){
         if (vetor[i] == nomeCompleto.toUpper()){
-            tabela->insertRow(0);
-            tabela->setItem(0, 0, new QTableWidgetItem(QString::number(i)));
-            tabela->setItem(0, 1, new QTableWidgetItem(vetor[i]));
-            return;
+            return "Matricula: " + QString::number(i) + "\nNome Completo: " + vetor[i];
         }
     }
+    return "Nao encontrado";
 }
 
 void OperarTabela::inserirElemento(int& matricula, QString& nomeCompleto)
