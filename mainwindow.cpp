@@ -14,8 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
         arquivo = new Arquivo(operar_tabela->getVetor(), operar_tabela->getTamanhoVetor());
         arquivo->abrir();
         operar_tabela->atualizar();
-    }catch (std::bad_alloc& e){
+    }
+    catch (std::bad_alloc& e){
         QMessageBox::critical(this, "Erro", "Nao foi possivel alocar memoria para a criacao da tabela");
+    }
+    catch (QString &e){
+        QMessageBox::critical(this, "Erro", e);
+    }
+    catch (...){
+        QMessageBox::critical(this, "Erro", "Erro desconhecido");
     }
 }
 
@@ -46,6 +53,9 @@ void MainWindow::on_pushButton_consultar_clicked()
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
+    catch(...){
+        QMessageBox::critical(this, "Erro", "Erro desconhecido");
+    }
 }
 
 
@@ -65,6 +75,9 @@ void MainWindow::on_pushButton_inserir_clicked()
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
+    catch(...){
+        QMessageBox::critical(this, "Erro", "Erro desconhecido");
+    }
 }
 
 
@@ -83,6 +96,9 @@ void MainWindow::on_pushButton_alterar_clicked()
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
     }
+    catch(...){
+        QMessageBox::critical(this, "Erro", "Erro desconhecido");
+    }
 }
 
 
@@ -99,6 +115,9 @@ void MainWindow::on_pushButton_remover_clicked()
     }
     catch(QString &e){
         QMessageBox::critical(this, "Erro", e);
+    }
+    catch(...){
+        QMessageBox::critical(this, "Erro", "Erro desconhecido");
     }
     
 }
