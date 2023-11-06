@@ -18,11 +18,9 @@ bool Arquivo::elemento_existe(const int& matricula)
     if (!vetor)
         throw QString("Vetor nao existe");
     if (matricula >= tamanho_vetor || matricula < 0)
-        throw QString("nmr matricula invalido (deve estar entre 0 e 999)");
+        throw QString("nmr matricula invalido (deve estar entre 0 e " + QString::number(tamanho_vetor-1) + ")");
     
-    if (vetor[matricula] != "")
-        return true;
-    return false;
+    return (vetor[matricula] != "");
 }
 
 void Arquivo::abrir()
@@ -30,7 +28,7 @@ void Arquivo::abrir()
     if (!vetor)
         throw QString("Vetor nao existe");
     
-    QString endereco_arquivo = "/home/cpedrohenrique1/Documents/development/qtcreator/Atividade12EDII/dados/DadosDosAlunos_Matricula_Nome.csv";
+    QString endereco_arquivo = "/home/puc/Documentos/repos/Atividade12EDII/dados/DadosDosAlunos_Matricula_Nome.csv";
     QFile arquivo(endereco_arquivo);
     if (!arquivo.open(QIODevice::ReadOnly))
         throw QString("Nao foi possivel abrir o arquivo");
